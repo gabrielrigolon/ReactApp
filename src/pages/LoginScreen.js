@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, TextInput, Button, ActivityIndicator, Alert } from 'react-native'; 
-//import firebase from 'firebase';
 import firebase from '../database/Firebase'
 import { useNavigation } from '@react-navigation/native';
 
@@ -10,14 +9,14 @@ class LoginScreen extends React.Component {
         super(props);
 
         this.state = {
-            mail: '',  
-            password: '',
+            mail: 'gabrielrigolon@gmail.com',  
+            password: '123456',
         }
     }
 
     componentDidMount() {
  
-        firebase.auth().signInWithEmailAndPassword("romualdomrc@gmail.com", "123456")
+        firebase.auth().signInWithEmailAndPassword("gabrielrigolon@gmail.com", "123456")
             .then(user => {
                 console.log("usuario logado ", user)
             })
