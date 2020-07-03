@@ -1,6 +1,6 @@
 //    "expo-sqlite": "~5.0.1",
 
-import * as SQLite from 'expo-sqlite';
+import * as SQLite from "expo-sqlite";
 
 const database_name = "ReactNative.db";
 const database_version = "1.0";
