@@ -1,58 +1,31 @@
 import React from 'react';
 import { View, Text, TextInput, Button, ActivityIndicator, Alert } from 'react-native'; 
-import firebase from '../database/Firebase'
 import { useNavigation } from '@react-navigation/native';
+
+import * as LoginService from './LoginService'
+
+const user = "gabrielrigolon@gmail.com"
+const password = "123456"
 
 class LoginScreen extends React.Component {
 
     constructor(props){
         super(props);
-
         this.state = {
-            mail: 'gabrielrigolon@gmail.com',  
-            password: '123456',
+            mail: '',  
+            password: '',
         }
     }
 
-    componentDidMount() {
- 
-        firebase.auth().signInWithEmailAndPassword("gabrielrigolon@gmail.com", "123456")
-            .then(user => {
-                console.log("usuario logado ", user)
-            })
-            .catch(error => {
-                console.log("erro ", error)
-            })
-            .finally(() => {
-                console.log("terminou")
-            })
-        
+    async componentDidMount() {
+        await LoginService.autoAuthenticate(user, password)
     }    
 
-    tryLogin(){
-
-
+    async tryLogin(){
         console.log("usuario", this.state.mail," senha ",this.state.password);
-//destructing
         const { mail, password } = this.state;
         const { navigation } = this.props;
-//promisse
-        firebase.auth().signInWithEmailAndPassword(mail, password)
-            .then(user => {
-                console.log("usuario logado ", user);
-                navigation.navigate('ContentScreen');
-                Alert.alert('Usuário logado com sucesso','',[{text:'OK'}]);
-                
-            })
-            .catch(error => {
-//                console.log("erro ", error)
-                //if (error.code === 'auth/user-not-found')
-            })
-            .finally(() => {
-                console.log("terminou")
-            })
-        
-
+        await LoginService.authenticate(mail, password, navigation)
     }
 
     onChangeMail(value){
@@ -62,8 +35,6 @@ class LoginScreen extends React.Component {
     onChangePassword(value){
         this.setState({password: value});
     }
-
-
 
     render() {
         return(
@@ -93,4 +64,4 @@ export default function(props) {
     const navigation = useNavigation();
   
     return <LoginScreen {...props} navigation={navigation} />;
-  }
+}
