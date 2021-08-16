@@ -10,18 +10,18 @@ const database_size = 200000;
 export default class Sqlite {
 
     initDB() {
-        db = SQLite.openDatabase(
+        dbs = SQLite.openDatabase(
             database_name,
             database_version,
             database_displayname,
             database_size
           )
 
-        db.transaction((tx) => {
+        dbs.transaction((tx) => {
             tx.executeSql('CREATE TABLE IF NOT EXISTS Content (id integer primary key, name, desc, img)');
         })
         
-        return db;
+        return dbs;
     }
 
 
